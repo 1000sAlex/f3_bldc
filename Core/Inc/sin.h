@@ -9,7 +9,7 @@
 #define INC_SIN_H_
 #include "main.h"
 
-#define PLOT_DATA_SIZE 120
+#define PLOT_DATA_SIZE 360
 
 typedef struct adc_plot_data
     {

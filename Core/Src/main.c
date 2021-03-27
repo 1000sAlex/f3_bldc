@@ -24,12 +24,11 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
-#include "uart_ui.h"
-#include "sin.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "sin.h"
+#include "uart_ui.h"
 adc_data_t ADC_data;
 extern plot_data_t plot;
 /* USER CODE END Includes */
@@ -104,6 +103,7 @@ int main(void)
     /* USER CODE BEGIN 2 */
 
     HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
+    //HAL_ADC_Start_IT(&hadc1);
     HAL_ADC_Start_DMA(&hadc1, (uint32_t*) &ADC_data, sizeof(ADC_data) / 2);
     HAL_GPIO_WritePin(PHASE_A_EN_GPIO_Port, PHASE_A_EN_Pin, 1);
     HAL_GPIO_WritePin(PHASE_B_EN_GPIO_Port, PHASE_B_EN_Pin, 1);
@@ -111,7 +111,8 @@ int main(void)
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
-    HAL_TIM_Base_Start(&htim1);
+    HAL_TIM_OC_Start(&htim1, TIM_CHANNEL_6);
+    HAL_TIM_Base_Start_IT(&htim1);
     HAL_TIM_Base_Start_IT(&htim6);
     /* USER CODE END 2 */
 
